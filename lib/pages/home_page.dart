@@ -47,29 +47,56 @@ class _HomePageState extends State<HomePage> {
                 );
               },
             ),
-            Wrap(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                ElevatedButton(
-                  onPressed: () => setState(() {
-                    _direction = getClockwiseDirection(_direction);
-                  }),
-                  child: const Text('clockwise'),
-                ),
-                ElevatedButton(
+                ControlButton(
+                  'Turn Right',
                   onPressed: () => setState(() {
                     _direction = getCounterClockwiseDirection(_direction);
                   }),
-                  child: const Text('counterclockwise'),
                 ),
-                ElevatedButton(
+                const SizedBox(width: 8.0),
+                ControlButton(
+                  'Move',
                   onPressed: () => setState(() {
                     _location = newLocation(_location, _direction);
                   }),
-                  child: const Text('counterclockwise'),
+                ),
+                const SizedBox(width: 8.0),
+                ControlButton(
+                  'Turn Left',
+                  onPressed: () => setState(() {
+                    _direction = getClockwiseDirection(_direction);
+                  }),
                 ),
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class ControlButton extends StatelessWidget {
+  const ControlButton(
+    this.text, {
+    super.key,
+    required this.onPressed,
+  });
+  final void Function()? onPressed;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: ElevatedButton(
+        onPressed: onPressed,
+        child: Text(
+          text,
+          overflow: TextOverflow.visible,
+          softWrap: false,
         ),
       ),
     );
